@@ -4,10 +4,9 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.os.*
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.os.IBinder
-import android.os.Messenger
+import android.view.View
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,5 +32,22 @@ class MainActivity : AppCompatActivity() {
             isBound = false
         }
 
+    }
+
+    fun sendMessage(view: View) {
+        if (!isBound) return
+
+        val msg = Message.obtain()
+        val bundle = Bundle()
+
+        bundle.putString("MyString", "Message Received!")
+
+        msg.data = bundle
+
+        try {
+            myService?.send(msg)
+        } catch (e: RemoteException) {
+            e.printStackTrace()
+        }
     }
 }

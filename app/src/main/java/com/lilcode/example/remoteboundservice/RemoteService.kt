@@ -7,6 +7,8 @@ import android.widget.Toast
 
 class RemoteService : Service() {
 
+    private var count = 0
+
     private  val myMessenger = Messenger(IncomingHandler()) // 핸들러 인스턴스 생성 및 이것을 전달하여 메신저 객체 생성
 
     // 핸들러 구성하기
@@ -14,7 +16,7 @@ class RemoteService : Service() {
         override fun handleMessage(msg: Message) {
             val data = msg.data
             val dataString = data.getString("MyString")
-            Toast.makeText(applicationContext, "$dataString", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "$dataString ${++count}", Toast.LENGTH_SHORT).show()
         }
     }
 
